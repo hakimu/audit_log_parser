@@ -30,13 +30,6 @@ class AuditLogParser
     end
   end
 
-  # def name_call_count
-  #   metric_data_lines.map do |line|
-  #     line.scan(/\[\[\{"name":"(\S*)\","scope":""},\[(\d*,\d.\d,\d.\d,\d.\d,\d.\d,\d.\d)\]\]/).flatten
-  #     # require 'pry' ; binding.pry
-  #   end
-  # end
-
   def parse_line(line)
     parsed_line = line.gsub(/^.*REQUEST BODY:\s/,"")
     JSON.parse(parsed_line)

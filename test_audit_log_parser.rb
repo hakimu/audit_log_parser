@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/rg'
 
-require_relative 'audit'
+require_relative 'audit_log_parser'
 
 class AuditLogTest < Minitest::Test
 
