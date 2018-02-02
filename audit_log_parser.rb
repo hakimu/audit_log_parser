@@ -93,4 +93,9 @@ class AuditLogParser
 
 end
 
-
+# log_contents = AuditLogParser.new("metric_one_line.txt")
+# # log_contents = AuditLogParser.new("audit_log_fixture.txt")
+# puts log_contents.inspect
+# # log_contents = AuditLogParser.new("audit_log_fixture.txt")
+# puts log_contents.class
+# puts log_contents.parse_metric_data_lines

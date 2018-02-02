@@ -20,4 +20,3 @@ class MetricData
 
 end
 
-# puts MetricData.new.output.count
