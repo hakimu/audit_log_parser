@@ -20,16 +20,6 @@ class AuditLogParser
     parsed_log
   end
 
-  def parse_logs
-    @log_content.each {|log| log.scan(/\(\d{5}\)\]\s:\sREQUEST BODY:\s\["/)}
-  end
-
-  def timestamps
-    metric_data_lines.map do |line|
-      line.scan(/\w",(\d+.\d+,\d+.\d+),/).flatten
-    end
-  end
-
   def parse_line(line)
     parsed_line = line.gsub(/^.*REQUEST BODY:\s/,"")
     JSON.parse(parsed_line)
