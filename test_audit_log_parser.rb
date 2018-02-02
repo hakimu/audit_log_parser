@@ -6,6 +6,7 @@ require_relative 'audit_log_parser'
 class AuditLogParserTest < Minitest::Test
 
   def setup
+    @log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'
     file = "audit_log_fixture.txt"
     @audit_log = AuditLogParser.new(file)
   end
@@ -19,8 +20,7 @@ class AuditLogParserTest < Minitest::Test
   end
 
   def test_deserialize_from_json
-    log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'
-    parsed_line = @audit_log.parse_line(log_line)
+    parsed_line = @audit_log.parse_line(@log_line)
     expected = ["run123",1509137330.405039,1509137393.893826,
                  [
                     [
@@ -33,37 +33,32 @@ class AuditLogParserTest < Minitest::Test
   end
 
   def test_parse_run_id_from_json
-    log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'
     expected = "run123"
-    run_id = @audit_log.parse_run_id(log_line)
+    run_id = @audit_log.parse_run_id(@log_line)
     assert_equal expected, run_id
   end
 
   def test_parse_metric_name_from_json
-    log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'
     expected = "Supportability/API/record_metric"
-    metric_name = @audit_log.parse_metric_name(log_line)
+    metric_name = @audit_log.parse_metric_name(@log_line)
     assert_equal expected, metric_name
   end
 
   def test_parse_start_timestamp
-    log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'
     expected = 1509137330.405039
-    start_timestamp = @audit_log.parse_start_timestamp(log_line)
+    start_timestamp = @audit_log.parse_start_timestamp(@log_line)
     assert_equal expected, start_timestamp
   end
 
   def test_parse_end_timestamp
-    log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'
     expected = 1509137393.893826
-    end_timestamp = @audit_log.parse_end_timestamp(log_line)
+    end_timestamp = @audit_log.parse_end_timestamp(@log_line)
     assert_equal expected, end_timestamp
   end
 
   def test_parse_call_count
-    log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'
     expected = 56
-    call_count = @audit_log.parse_call_count(log_line)
+    call_count = @audit_log.parse_call_count(@log_line)
     assert_equal expected, call_count
   end
 
