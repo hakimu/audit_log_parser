@@ -32,35 +32,40 @@ class AuditLogParserTest < Minitest::Test
     assert_equal expected, parsed_line
   end
 
-  def test_parse_run_id_from_json
-    expected = "run123"
-    run_id = @audit_log.parse_run_id(@log_line)
-    assert_equal expected, run_id
+  def test_metric_data_posts
+    assert_equal 14, @audit_log.metric_data_posts.count
+    assert @audit_log.metric_data_posts.all? {|post| post.is_a? MetricDataPost }
   end
 
-  def test_parse_metric_name_from_json
-    expected = "Supportability/API/record_metric"
-    metric_name = @audit_log.parse_metric_name(@log_line)
-    assert_equal expected, metric_name
-  end
+  # def test_parse_run_id_from_json
+  #   expected = "run123"
+  #   run_id = @audit_log.parse_run_id(@log_line)
+  #   assert_equal expected, run_id
+  # end
 
-  def test_parse_start_timestamp
-    expected = 1509137330.405039
-    start_timestamp = @audit_log.parse_start_timestamp(@log_line)
-    assert_equal expected, start_timestamp
-  end
+  # def test_parse_metric_name_from_json
+  #   expected = "Supportability/API/record_metric"
+  #   metric_name = @audit_log.parse_metric_name(@log_line)
+  #   assert_equal expected, metric_name
+  # end
 
-  def test_parse_end_timestamp
-    expected = 1509137393.893826
-    end_timestamp = @audit_log.parse_end_timestamp(@log_line)
-    assert_equal expected, end_timestamp
-  end
+  # def test_parse_start_timestamp
+  #   expected = 1509137330.405039
+  #   start_timestamp = @audit_log.parse_start_timestamp(@log_line)
+  #   assert_equal expected, start_timestamp
+  # end
 
-  def test_parse_call_count
-    expected = 56
-    call_count = @audit_log.parse_call_count(@log_line)
-    assert_equal expected, call_count
-  end
+  # def test_parse_end_timestamp
+  #   expected = 1509137393.893826
+  #   end_timestamp = @audit_log.parse_end_timestamp(@log_line)
+  #   assert_equal expected, end_timestamp
+  # end
+
+  # def test_parse_call_count
+  #   expected = 56
+  #   call_count = @audit_log.parse_call_count(@log_line)
+  #   assert_equal expected, call_count
+  # end
 
 end
 

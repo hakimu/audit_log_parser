@@ -1,4 +1,5 @@
 require 'json'
+require_relative 'metric_data_post'
 
 class AuditLogParser
 
@@ -31,67 +32,34 @@ class AuditLogParser
     end
   end
 
-  def parse_run_id(line)
-    parse_line(line)[0]
+  def metric_data_posts
+    @metric_data_posts ||= parse_metric_data_lines.map {|post| MetricDataPost.new(post)}
   end
 
-  def parse_metric_name(line)
-    parse_line(line)[3][0][0]["name"]
-  end
-
-  def parse_start_timestamp(line)
-    parse_line(line)[1]
-  end
-
-  def parse_end_timestamp(line)
-    parse_line(line)[2]
-  end
-
-  def parse_call_count(line)
-    parse_line(line)[3][0][1][0]
-  end
-
-  def get_all_ids
-    run_ids = []
-    metric_data_lines.map do |line|
-      run_ids << parse_run_id(line)
+  def extract_metric(name)
+    results = []
+    metric_data_posts.each do |post|
+      if result = post.metrics.detect {|metric| metric.name == name}
+        results << result
+      end
     end
-    run_ids
+    results
   end
 
-  def get_all_metric_names
-    metric_names = []
-    metric_data_lines.map do |line|
-      metric_names << parse_metric_name(line)
-    end
-    metric_names
+  def sum_call_count(metric_name)
+    extract_metric(metric_name).inject(0) {|memo,metric| memo + metric.call_count}
   end
 
-  def get_start_timestamps
-    start_timestamps = []
-    metric_data_lines.map do |line|
-      start_timestamps << parse_start_timestamp(line)
-    end
-    start_timestamps
-  end
-
-  def get_end_timestamps
-    end_timestamps = []
-    metric_data_lines.map do |line|
-      end_timestamps << parse_end_timestamp(line)
-    end
-    end_timestamps
-  end
-
-  def get_call_counts
-    call_counts = []
-    metric_data_lines.map do |line|
-      call_counts << parse_call_count(line)
-    end
-    call_counts
+  def metric_data_time_window
+    [@metric_data_posts.first.start_time, @metric_data_posts.last.end_time].map{|timestamp| Time.at(timestamp)}
   end
 
 end
+
+# create a metric data object to have a distinction between metric data and transaction event data, etc.
+# the metric_data_time_window method should be moved to the metricdata object
+# method to give the overall time window on the metric data object
+
 
 # log_contents = AuditLogParser.new("metric_one_line.txt")
 # # log_contents = AuditLogParser.new("audit_log_fixture.txt")
