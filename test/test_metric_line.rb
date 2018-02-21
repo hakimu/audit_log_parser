@@ -1,9 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/rg'
+require 'test_helper'
 
-require_relative 'metric_line'
-
-class MetricLineTest < Minitest::Test
+class TestMetricLine < Minitest::Test
 
   def setup
     data = [{"name"=>"Supportability/invoke_remote_size", "scope"=>""}, [2, 8379.0, 0.0, 2.0, 8377.0, 70174133.0]]
@@ -49,4 +48,5 @@ class MetricLineTest < Minitest::Test
     expected = 70174133.0
     assert_equal expected, @line.sum_of_squares
   end
+
 end

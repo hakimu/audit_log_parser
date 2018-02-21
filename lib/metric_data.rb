@@ -42,6 +42,3 @@ class MetricData
   end
 
 end
-
-
-# MetricData.new.output

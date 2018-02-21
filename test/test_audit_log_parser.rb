@@ -1,9 +1,7 @@
 require 'minitest/autorun'
-require 'minitest/rg'
+require 'test_helper'
 
-require_relative 'audit_log_parser'
-
-class AuditLogParserTest < Minitest::Test
+class TestAuditLogParser < Minitest::Test
 
   def setup
     @log_line = '[2017-10-27 13:49:53 -0700 mwear (6523)] : REQUEST BODY: ["run123",1509137330.405039,1509137393.893826,[[{"name":"Supportability/API/record_metric","scope":""},[56,0.0,0.0,0.0,0.0,0.0]]]]'

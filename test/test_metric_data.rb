@@ -1,11 +1,8 @@
-require_relative 'metric_data'
-
 require 'minitest/autorun'
 require 'minitest/rg'
+require 'test_helper'
 
-
-
-class MetricDataTest < Minitest::Test
+class TestMetricData < Minitest::Test
 
   def setup
     file = "audit_log_fixture.txt"
@@ -21,4 +18,19 @@ class MetricDataTest < Minitest::Test
     assert_equal 14, @metric_data.posts.count
     assert @metric_data.posts.all? {|post| post.is_a? MetricDataPost }
   end
+
 end
+
+# Below is from the deplicate file.  Not sure if it's being used.
+# require 'minitest/autorun'
+# require 'minitest/rg'
+
+# require_relative 'metric_data'
+
+# class MetricDataTest < Minitest::Test 
+  
+#   def setup
+#     @audit_log = MetricData.new
+#   end
+
+# end

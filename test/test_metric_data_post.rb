@@ -1,9 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/rg'
+require 'test_helper'
 
-require_relative 'metric_data_post'
-
-class MetricDataPostTest < Minitest::Test
+class TestMetricDataPost < Minitest::Test
 
   def setup
     file = File.read("metric_post_fixture.txt")
