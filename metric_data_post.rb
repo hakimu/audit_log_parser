@@ -11,7 +11,6 @@ class MetricDataPost
     @start_time = data[1]
     @end_time = data[2]
     @metrics = data[3].map {|line| MetricLine.new(line)}
-    # require 'pry' ; binding.pry
   end
 
 end

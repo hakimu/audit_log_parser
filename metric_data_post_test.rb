@@ -8,7 +8,6 @@ class MetricDataPostTest < Minitest::Test
   def setup
     file = File.read("metric_post_fixture.txt")
     data = JSON.parse(file)
-    require 'pry' ; binding.pry
     @post = MetricDataPost.new(data)
   end
 
